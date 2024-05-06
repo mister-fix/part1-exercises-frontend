@@ -18,9 +18,11 @@ const App = () => {
 	 * the above line can be replaced with the following
 	 * const [votes, setVotes] = useState(anecdotes.map(_ => 0));
 	 */
-	const highestVotedIndex = votes.indexOf(Math.max(...votes));
+	const [mostVotes, setMostVotes] = useState(0);
+	// const highestVotedIndex = votes.indexOf(Math.max(...votes));
 
 	const getRandomNumber = () => {
+		// for (;;) is a JS shorthand for an infinite loop
 		for (;;) {
 			const randomNum = Math.floor(Math.random() * anecdotes.length);
 			if (randomNum !== selected) return randomNum;
@@ -40,6 +42,10 @@ const App = () => {
 		newVotes[selected] += 1;
 		// Updating the votes
 		setVotes(newVotes);
+
+		if (newVotes[selected] > votes[mostVotes]) {
+			setMostVotes(selected);
+		}
 	};
 
 	return (
@@ -55,8 +61,8 @@ const App = () => {
 			</div>
 
 			<h2>Anecdote with most votes</h2>
-			<div>{anecdotes[highestVotedIndex]}</div>
-			<div>has {votes[highestVotedIndex]} votes</div>
+			<div>{anecdotes[mostVotes]}</div>
+			<div>has {votes[mostVotes]} votes</div>
 		</div>
 	);
 };
