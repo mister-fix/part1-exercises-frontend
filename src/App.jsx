@@ -13,6 +13,11 @@ const App = () => {
 	];
 
 	const [selected, setSelected] = useState(0);
+	const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
+	/**
+	 * the above line can be replaced with the following
+	 * const [votes, setVotes] = useState(anecdotes.map(_ => 0));
+	 */
 
 	const getRandomNumber = () => {
 		do {
@@ -21,13 +26,21 @@ const App = () => {
 		} while (true);
 	};
 
-	console.log("anecdote selected value", selected);
+	const handleVotes = () => {
+		// Making a copy of the notes array
+		const newVotes = [...votes];
+		// Incrementing the copied votes array at the selected index by 1
+		newVotes[selected] += 1;
+		// Updating the votes
+		setVotes(newVotes);
+	};
 
 	return (
 		<div>
-			{anecdotes[selected]}
-
+			<div>{anecdotes[selected]}</div>
+			<div>has {votes[selected]} votes</div>
 			<div>
+				<button onClick={handleVotes}>vote</button>
 				<button onClick={() => setSelected(getRandomNumber)}>
 					next anecdote
 				</button>
